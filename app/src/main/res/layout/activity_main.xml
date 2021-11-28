@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/clMain">
+
+    <TextView
+        android:id="@+id/tvPhrase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Phrase: "
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/teal_200"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvLetters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Letters Guessed: "
+        android:letterSpacing=".1"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/teal_200"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPhrase"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcGuss"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLetters"
+        app:layout_constraintBottom_toTopOf="@id/llayout" />
+
+
+    <LinearLayout
+        android:id="@+id/llayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <EditText
+            android:id="@+id/etGuss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Enter your Guss"
+            android:singleLine="true"
+            />
+
+        <Button
+            android:id="@+id/btSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submint"
+            android:layout_gravity="end"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
