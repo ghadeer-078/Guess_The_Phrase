@@ -2,7 +2,9 @@ package com.example.guessthephrase
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var sub: Button
     lateinit var tvPhrase: TextView
     lateinit var tvLetters: TextView
+    lateinit var myHighScore: TextView
 
     lateinit var letters: ArrayList<String>
     private val answer = "ghader"
@@ -29,9 +32,24 @@ class MainActivity : AppCompatActivity() {
     private var count = 0
     private var guessPhrase = true
 
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private var score = 0
+    private var highScore = 0
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        sharedPreferences = this.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        highScore = sharedPreferences.getInt("HighScore", 0)
+
+        myHighScore = findViewById(R.id.tvHS)
+        myHighScore.text = "High Score: $highScore"
+
 
         for(i in answer.indices){
             if(answer[i] == ' '){
@@ -45,10 +63,11 @@ class MainActivity : AppCompatActivity() {
 
         letters = ArrayList()
 
+        clMain = findViewById(R.id.clMain)
+
         rcGuss.adapter = MessageAdapter(this, letters)
         rcGuss.layoutManager = LinearLayoutManager(this)
 
-        clMain = findViewById(R.id.clMain)
         tvPhrase = findViewById(R.id.tvPhrase)
         tvLetters = findViewById(R.id.tvLetters)
         guss = findViewById(R.id.etGuss)
@@ -64,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         if(guessPhrase){
             if(msg == answer){
                 disableEntry()
+                updateScore()
                 showAlertDialog("You win!\n\nPlay again?")
             }else{
                 letters.add("Wrong guess: $msg")
@@ -93,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         guss.isClickable = false
     }
 
-    @SuppressLint("SetTextI18n")
+
     private fun updateText(){
         tvPhrase.text = "Phrase:  " + myAnswer.uppercase()
         tvLetters.text = "Guessed Letters:  " + guessedLetters
@@ -119,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         }
         if(myAnswer==answer){
             disableEntry()
+            updateScore()
             showAlertDialog("You win!\n\nPlay again?")
         }
 
@@ -144,6 +165,19 @@ class MainActivity : AppCompatActivity() {
         updateText()
         
         rcGuss.scrollToPosition(letters.size - 1)
+    }
+
+
+    private fun updateScore(){
+        score = 10 - count
+        if(score >= highScore){
+            highScore = score
+            with(sharedPreferences.edit()) {
+                putInt("HighScore", highScore)
+                apply()
+            }
+            Snackbar.make(clMain, "NEW HIGH SCORE!", Snackbar.LENGTH_LONG).show()
+        }
     }
 
 

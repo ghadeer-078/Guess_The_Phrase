@@ -8,6 +8,21 @@
     android:id="@+id/clMain">
 
     <TextView
+        android:id="@+id/tvHS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:letterSpacing=".1"
+        android:text="High Score: "
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/teal_200"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tvPhrase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +32,7 @@
         android:textColor="@color/white"
         android:background="@color/teal_200"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
